@@ -20,7 +20,7 @@ Data on forecast errors for US real Gross Domestic Product (GDP) growth nowcasts
 
 Data can be downloaded from https://www.philadelphiafed.org/surveys-and-data/real-time-data-research/error-statistics.
 
-A copy of the data is provided as part of this archive. The data are in the public domain. Datafile: `SPF_Error_Statistics.mat` (MATLAB, proprietary).
+A copy of the data is provided as part of this archive. The original data are publicly accessible from the Federal Reserve Bank of Philadelphia. Users should consult the source website for applicable terms of use. Datafile: `SPF_Error_Statistics.mat` (MATLAB `.mat` format).
 
 ### Details on the dataset
 
