@@ -1,6 +1,6 @@
 %% Replication File to the paper "Robust Forecast Evaluation Under Extreme Shocks"
 % Authors: Fabrizio Iacone and Andrea Viselli
-% Description: Real GDP growth forecast evaluation (SPF vs. naive benchmark)
+% Description: Empirical application to US Real GDP growth (Section 4)
 % -------------------------------------------------------------------------
 
 clc; clear; close all;
@@ -141,18 +141,24 @@ fprintf(['Notes: The table reports average forecast errors (AFE) and mean square
 fprintf('===============================================================================\n\n');
 
 %% 7. Monte Carlo Calibration Parameters (Section 3 of Paper)
-% Fit an AR(1) model to the loss differential to calibrate the Monte Carlo simulation
+% Fit an AR(1) model to the loss differential to calibrate the parameters
+% for the Monte Carlo simulation at the end of Section 3
 fprintf('--- Monte Carlo Calibration (AR(1) fit to pre-Covid data) ---\n');
 
-% Standardizing variance for the first 80 observations
-% Dividing by sqrt(68) aligns the variance with the MC design where sigma^2 = 1.
 mdl = arima(1, 0, 0); 
-EstMdl = estimate(mdl, loss_diff(1:80) / sqrt(68), 'Display', 'off');
+EstMdl = estimate(mdl, loss_diff(1:80), 'Display', 'off');
+
+phi = EstMdl.AR{1};
+sd_u = sqrt(EstMdl.Variance);
 
 % Print empirical parameter equivalents
-disp('Estimated AR(1) Coefficient (rho):');
-disp(EstMdl.AR{1});
+disp('Estimated AR(1) Coefficient (phi):');
+disp(phi);
+disp('Estimated AR(1) Innovation Std. Dev. (sd_u):');
+disp(sd_u);
 
+% Standardize using the innovation standard deviation estimated from the
+% first 80 observations, so the Monte Carlo innovation variance is sigma^2 = 1.
 disp('Mean parameter estimate equivalent:');
-fprintf('Pre-Covid Mean (1:80): %f\n', mean(loss_diff(1:80)) / sqrt(68));
-fprintf('Covid Mean (81:83):    %f\n', mean(loss_diff(81:83)) / sqrt(68));
+fprintf('Pre-Covid average (1:80): %f\n', mean(loss_diff(1:80)) / sd_u);
+fprintf('Covid drift/shock (81:83):    %f\n', mean(loss_diff(81:83)) / sd_u - mean(loss_diff(1:80)) / sd_u);

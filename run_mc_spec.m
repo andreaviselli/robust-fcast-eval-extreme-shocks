@@ -1,6 +1,22 @@
-function [rejDM, rejDMstar] = run_spf_mc( ...
+function [rejDM, rejDMstar] = run_mc_spec( ...
     nobs, nrounds, sigmasq, phi, kappa, theta, m, ...
     bw, DMcv, seed, reset_rng_each_design)
+
+    %RUN_MC_SPEC Run a Monte Carlo experiment for one loss-differential DGP.
+    %
+    %   [rejDM, rejDMstar] = RUN_MC_SPEC(nobs, nrounds, sigmasq, phi,
+    %   kappa, theta, m, bw, DMcv, seed, reset_rng_each_design) simulates
+    %   the loss differential
+    %
+    %       LL_t = u_t + kappa + theta * I_t,
+    %
+    %   where u_t is an AR(1) process with coefficient phi and innovation
+    %   variance sigmasq. I_t identifies a shock beginning at observation
+    %   81 and lasting m observations. The function returns the empirical
+    %   rejection frequencies of the ordinary DM test (rejDM) and the
+    %   winsorized DM* test (rejDMstar), using bandwidth bw and two-sided
+    %   critical value DMcv. The random-number generator is reset to seed
+    %   when reset_rng_each_design is true.
 
     % ---------------------------------------------------------------------
     % Reset random seed if requested

@@ -28,19 +28,20 @@ The data file contains the real GDP realization series (`Realiz1`) and the media
 
 ## Description of programs/code
 
-Run the following programs/code in MATLAB R2023a (recommended).
+Run the replication programs in MATLAB. The code was developed and tested using MATLAB R2026a. The Econometrics Toolbox is required only for the AR(1) calibration in `ReplicationCode_Fig_1_Table_3.m`.
 The replication files are compatible with macOS, Windows, and Linux, provided that a compatible version of MATLAB is installed.
 The code does not include any OS- or Windows-specific paths or functions, so no platform-dependent adjustments should be necessary.
 
-*   `ReplicationCode_MC_Table_1_2.m` generates Tables 1 and 2 in Section 3 (MONTE CARLO EXERCISE).
-*   `run_spf_mc.m` is the helper function called by `ReplicationCode_MC_Table_1_2.m` to run each Monte Carlo design.
-*   `ReplicationCode_Fig_1_Table_3.m` generates Figure 1 and Table 3 in Section 4 (EMPIRICAL APPLICATION TO US REAL GDP GROWTH) and reports the empirical calibration parameters used in the Monte Carlo exercise.
+*   `ReplicationCode_MC_Table_1_2.m` generates Tables 1 and 2 in Section 3 (MONTE CARLO STUDY).
+*   `run_mc_spec.m` runs one Monte Carlo experiment for a specified set of loss-differential DGP parameters and returns the DM and DM* rejection frequencies. It is called by both Monte Carlo scripts.
+*   `ReplicationCode_MC_Calibrated.m` reproduces the empirically calibrated Monte Carlo experiment reported in the last paragraph of Section 3, fixing `kappa = -0.8`, `theta = -80`, `phi = 0.25`, and `m = 3`. It calls `run_mc_spec.m` and reports the DM and DM* rejection frequencies.
+*   `ReplicationCode_Fig_1_Table_3.m` generates Figure 1 and Table 3 in Section 4 (EMPIRICAL APPLICATION TO US REAL GDP GROWTH). In addition, it reports the empirical calibration parameters used in the Monte Carlo exercise.
 
-The Monte Carlo replication code uses 10,000 replications and a fixed random seed. The empirical script requires the MATLAB Econometrics Toolbox for the AR(1) calibration.
+The Monte Carlo replication code uses 10,000 replications and a fixed random seed. The empirical calibration fits an AR(1) model to the squared-loss differential over the pre-Covid period 2000:Q1 through 2019:Q4 (the first 80 observations of the evaluation sample).
 
 ## License for Code
 
-The code is licensed under a MIT license. See license.txt for details.
+The code is licensed under a MIT license. See `license.txt` for details.
 
 ## List of tables and figures
 
@@ -56,10 +57,11 @@ The provided code reproduces all tables and figures in the paper.
 ## Instructions to replicators
 
 *   Set the working directory to the folder containing all MATLAB scripts and data files.
-*   Execute `ReplicationCode_MC_Table_1_2.m` to reproduce Tables 1 and 2. The script calls `run_spf_mc.m` automatically.
+*   Execute `ReplicationCode_MC_Table_1_2.m` to reproduce Tables 1 and 2. The script calls `run_mc_spec.m` automatically.
+*   Execute `ReplicationCode_MC_Calibrated.m` to reproduce the empirically calibrated Monte Carlo experiment reported in Section 3. The script calls `run_mc_spec.m` automatically.
 *   Execute `ReplicationCode_Fig_1_Table_3.m` to reproduce Figure 1 and Table 3.
 *   Tables are displayed in the **MATLAB Command Window**; Figure 1 is displayed in a MATLAB figure window.
-*   The expected running time is approximately a few seconds for both the Monte Carlo simulations and `ReplicationCode_Fig_1_Table_3.m`.
+*   The expected running time is approximately a few seconds for the Monte Carlo simulations and `ReplicationCode_Fig_1_Table_3.m`.
 
 ## References
 

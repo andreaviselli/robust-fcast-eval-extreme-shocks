@@ -1,6 +1,6 @@
 %% Replication File to the paper "Robust Forecast Evaluation Under Extreme Shocks"
 % Authors: Fabrizio Iacone and Andrea Viselli
-% Description: Monte Carlo study
+% Description: Monte Carlo study (Section 3)
 % -------------------------------------------------------------------------
 
 clc; clear; close all;
@@ -13,7 +13,7 @@ seed    = 0;
 nobs    = 100;
 nrounds = 10000;
 
-% Resetting the seed before each run
+% Resetting the seed before each experiment
 reset_rng_each_design = true;
 
 rng(seed);
@@ -99,7 +99,7 @@ for im = 1:numel(m_grid_size)
 
         phi = phi_grid_size(iphi);
 
-        [rejDM, rejDMstar] = run_spf_mc( ...
+        [rejDM, rejDMstar] = run_mc_spec( ...
             nobs, nrounds, sigmasq, phi, kappa_size, theta_size, m, ...
             bw, DMcv, seed, reset_rng_each_design);
 
@@ -126,7 +126,7 @@ for im = 1:numel(m_grid_power)
         kappa = design_grid(idesign, 1);
         theta = design_grid(idesign, 2);
 
-        [rejDM, rejDMstar] = run_spf_mc( ...
+        [rejDM, rejDMstar] = run_mc_spec( ...
             nobs, nrounds, sigmasq, phi_power, kappa, theta, m, ...
             bw, DMcv, seed, reset_rng_each_design);
 
